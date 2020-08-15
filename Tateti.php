@@ -1,13 +1,13 @@
 <?php
 
 class Tateti {
- private $tablero = [['_','_','_'],['_','_','_'],['_','_','_']];
+ private $board = [['_','_','_'],['_','_','_'],['_','_','_']];
 
-public function mostrar(){
+public function display(){
   $string='';
   for ($fil=0; $fil < 3; $fil++) {
     for ($col=0; $col < 3; $col++) { 
-        $string .= $this->tablero[$fil][$col]." ";
+        $string .= $this->board[$fil][$col]." ";
     }
     $string.="\n";
   }
@@ -15,92 +15,65 @@ public function mostrar(){
 }
 
 public function jugarX(int $fila, int $col){
-  $this->jugar($fila,$col,'X');
+  $this->play($fila,$col,'X');
 }
 
 public function jugarO(int $fila, int $col){
-  $this->jugar($fila,$col,'O');
+  $this->play($fila,$col,'O');
   }
 
-public function jugar(int $fila, int $col, string $signo){
-  if($this->tablero[$fila][$col] === '_'){
-      $this->tablero[$fila][$col] = $signo;
+public function play(int $fila, int $col, string $signo){
+  if($this->board[$fila][$col] === '_'){
+      $this->board[$fila][$col] = $signo;
       return true;
   }
   return false;
 }
 
-public function ganoX(){
+public function winner(String $signo){
 
-  if ($this->tablero[0]===['X','X','X']) {
+  if ($this->board[0]===[$signo,$signo,$signo]) {
     return true;
   }
-  if ($this->tablero[1]===['X','X','X']) {
+  if ($this->board[1]===[$signo,$signo,$signo]) {
     return true;
   }
-  if ($this->tablero[2]===['X','X','X']) {
+  if ($this->board[2]===[$signo,$signo,$signo]) {
     return true;
   }
-  if($this->tablero[0][0]==='X' && $this->tablero[1][0]==='X' && $this->tablero[2][0]==='X'){
+  if($this->board[0][0]===$signo && $this->board[1][0]===$signo && $this->board[2][0]===$signo){
     return true;
   }
-  if($this->tablero[0][1]==='X' && $this->tablero[1][1]==='X' && $this->tablero[2][1]==='X'){
+  if($this->board[0][1]===$signo && $this->board[1][1]===$signo && $this->board[2][1]===$signo){
     return true;
   }
-  if($this->tablero[0][2]==='X' && $this->tablero[1][2]==='X' && $this->tablero[2][2]==='X'){
+  if($this->board[0][2]===$signo && $this->board[1][2]===$signo && $this->board[2][2]===$signo){
     return true;
   }
-  if($this->tablero[0][0]==='X' && $this->tablero[1][1]==='X'&& $this->tablero[2][2]==='X'){
+  if($this->board[0][0]===$signo && $this->board[1][1]===$signo&& $this->board[2][2]===$signo){
     return true;
   }
-  if($this->tablero[0][2]==='X' && $this->tablero[1][1]==='X'&& $this->tablero[2][0]==='X'){
+  if($this->board[0][2]===$signo && $this->board[1][1]===$signo&& $this->board[2][0]===$signo){
     return true;
   }
   return false;
 }
 
-public function ganoO(){
+public function endTheGame(){
 
-    if ($this->tablero[0]===['O','O','O']) {
-      return true;
-    }
-    if ($this->tablero[1]===['O','O','O']) {
-      return true;
-    }
-    if ($this->tablero[2]===['O','O','O']) {
-      return true;
-    }
-    if($this->tablero[0][0]==='O' && $this->tablero[1][0]==='O' && $this->tablero[2][0]==='O'){
-      return true;
-    }
-    if($this->tablero[0][1]==='O' && $this->tablero[1][1]==='O' && $this->tablero[2][1]==='O'){
-      return true;
-    }
-    if($this->tablero[0][2]==='O' && $this->tablero[1][2]==='O' && $this->tablero[2][2]==='O'){
-      return true;
-    }
-    if($this->tablero[0][0]==='O' && $this->tablero[1][1]==='O'&& $this->tablero[2][2]==='O'){
-      return true;
-    }
-    if($this->tablero[0][2]==='O' && $this->tablero[1][1]==='O'&& $this->tablero[2][0]==='O'){
-      return true;
-    }
-    return false;
-  }
-
-public function gano(){
-  if ($this->ganoX()) {
+  if ($this->winner('X')) {
     return true;
   }
-  if ($this->ganoO()) {
+  if ($this->winner('O')) {
     return true;
   }
     return false;
 }
 
-public function empate(){
-  if($this->gano()==false && !in_array('_',$this->tablero[0]) &&
-  !in_array('_',$this->tablero[1])&& !in_array('_',$this->tablero[2])){
+public function tie(){
+
+  if($this->endTheGame()==false && !in_array('_',$this->board[0]) &&
+  !in_array('_',$this->board[1]) && !in_array('_',$this->board[2])){
     return true;
   }
   return false;
